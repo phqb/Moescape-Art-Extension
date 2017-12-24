@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>New tab</title>
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./MaterialIcons.css">
+</head>
+<body>
+	<div class="container">
+		<div class="container__image-container">
+			<div class="container__image-container__image-background"></div>
+			<div class="container__image-container__image"></div>
+			<div class="container__image-container__image__loading-icon-container">
+				<i class="container__image-container__image__loading-icon-container__icon material-icons md-18">&#xE863;</i>
+			</div>
+		</div>
+
+		<div class="container__description-container">
+			<div class="container__description-container__mask"></div>
+			<div class="container__description-container__reset-button" title="Get a new image!">
+				<i class="material-icons md-18 container__description-container__reset-button__icon">&#xE863;</i>
+			</div>
+			<div class="container__description-container__text-container">
+				<div class="container__description-container__text-container__title-container">
+					<a href="{{ titleUrl }}" class="container__description-container__text-container__title-container__title">
+						{{ title }}
+					</a>
+					<div class="container__description-container__text-container__title-container__download-button" title="Download this image">
+						<i class="material-icons md-18">&#xE2C4;</i>
+					</div>
+				</div>
+				<div class="container__description-container__text-container__source">
+					<a href="{{ sourceUrl }}">{{ source }}</a>
+				</div>
+				<div class="container__description-container__text-container__author">
+					<a href="{{ authorUrl }}">{{ author }}</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container__tabs-button" title="Top sites">
+			<i class="material-icons md-24 container__tabs-button__icon">&#xE8D8;</i>
+		</div>
+
+		<div class="container__topsites-wrapper">
+			<div class="container__topsites-wrapper__topsites-container">
+				<div class="container__topsites-wrapper__topsites-container__title-container">
+					<div class="container__topsites-wrapper__topsites-container__title-container__title">
+						Top sites
+					</div>
+					<div class="container__topsites-wrapper__topsites-container__title-container__close-button" title="Close">
+						<i class="material-icons md-36">&#xE5CD;</i>
+					</div>
+				</div>
+				<div class="container__topsites-wrapper__topsites-container__topsites">
+					{{#topSites}}
+						<a href="{{ url }}" class="container__topsites-wrapper__topsites-container__topsites__topsite" title="{{ title }}">
+							<div class="container__topsites-wrapper__topsites-container__topsites__topsite__favicon">
+								{{#url}}
+									<img src="{{favicon}}">
+								{{/url}}
+							</div>
+							<div class="container__topsites-wrapper__topsites-container__topsites__topsite__title">
+								{{ title }}
+							</div>
+						</a>
+					{{/topSites}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="./new-tab.bundle.js"></script>
+</body>
+</html>

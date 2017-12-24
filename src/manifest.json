@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Moescape Art",
+    "version": "1.0",
+    "description": "Replace your new tab with a randomized image from r/Moescape",
+    "icons" : {
+        "48": "moe-48.png"
+    },
+    "permissions": [
+        "topSites",
+        "contextMenus",
+        "downloads",
+        "storage"
+    ],
+    "chrome_url_overrides" : {
+        "newtab": "new-tab.html"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    }
+}

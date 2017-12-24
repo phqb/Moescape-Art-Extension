@@ -1,0 +1,255 @@
+@keyframes spin
+	100%
+		transform: rotate(360deg)
+
+body
+	padding: 0
+	margin: 0
+	overflow: hidden
+
+.container 
+	width: 100%
+	height: 100vh
+
+	&__image-container 
+		width: 100%
+		height: 100%
+
+		&__image-background 
+			background-color: black
+			filter: blur(8px)
+			width: calc(100% + 32px)
+			height: calc(100% + 32px)
+			position: absolute
+			top: -16px
+			left: -16px
+			overflow: hidden
+
+		&__image 
+			background-color: transparent
+			background-repeat: no-repeat
+			background-size: contain
+			background-position: center
+			width: 100%
+			height: 100%
+			position: absolute
+			top: 0
+			left: 0
+
+			&__loading-icon-container 
+				position: absolute
+				width: 100%
+				height: 100%
+				top: 0
+				left: 0
+				padding: 12px
+				display: flex
+				align-items: flex-end
+				justify-content: flex-start
+				visibility: hidden
+				box-sizing: border-box
+
+				&__icon 
+					color: lightgray
+					animation: spin 2s linear infinite
+
+	&__description-container 
+		opacity: 0
+		transition: opacity 0.2s
+		padding: 12px
+		padding-top: 32px
+		width: 100%
+		box-sizing: border-box
+		position: absolute
+		bottom: 0
+		display: flex
+		flex-direction: row
+		flex-wrap: nowrap
+		justify-content: space-between
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.3) 60%, transparent)
+
+		&__mask 
+			width: 100%
+			height: 100%
+			top: 0
+			left: 0
+			position: absolute
+
+		&__reset-button 
+			flex-grow: 0
+			border-radius: 50%
+			background: rgba(255, 255, 255, 0.15)
+			box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+			box-sizing: border-box
+			transition: box-shadow 0.2s
+			cursor: pointer
+			width: 24px
+			height: 24px
+
+			&__icon 
+				padding: calc((24px - 18px) / 2)
+				color: white
+
+
+		&__text-container 
+			flex-grow: 1
+			align-items: flex-start
+			margin-left: 12px
+
+			&__title-container 
+				margin-bottom: 10px
+				display: flex
+				flex-direction: row
+				flex-wrap: nowrap
+				align-items: center
+
+				&__title 
+					text-decoration: none
+					color: white
+					font-size: 18px
+					flex-grow: 0
+
+				&__download-button 
+					background: rgba(255, 255, 255, 0.15)
+					color: white
+					box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+					width: 24px
+					height: 24px
+					flex-grow: 0
+					border-radius: 50%
+					padding: calc((24px - 18px) / 2)
+					margin-left: 8px
+					box-sizing: border-box
+					cursor: pointer
+
+			&__source 
+				margin-bottom: 8px
+
+				a
+					text-decoration: none
+					font-size: 14px
+					color: lightgray
+
+
+			&__author 
+				a 
+					text-decoration: none
+					color: lightgray
+					font-size: 12px
+
+	&__tabs-button 
+		position: absolute
+		bottom: 12px
+		right: 12px
+		border-radius: 50%
+		background: rgba(255, 255, 255, 0.15)
+		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+		box-sizing: border-box
+		transition: box-shadow 0.2s
+		cursor: pointer
+		width: 48px
+		height: 48px
+
+		&__icon 
+			padding: calc((48px - 24px) / 2)
+			color: white
+
+	&__topsites-wrapper 
+		position: absolute
+		width: 100%
+		height: 100%
+		top: 0
+		left: 0
+		display: flex
+		flex-direction: row
+		flex-wrap: nowrap
+		align-items: center
+		justify-content: center
+		visibility: hidden
+		transition: opacity 0.5s
+
+		&__topsites-container 
+			width: 800px
+			background: white
+			box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)
+			padding: 32px
+			padding-bottom: 48px
+			font-family: sans-serif
+			color: gray
+			box-sizing: border-box
+
+			@media screen and (max-width: 799px) 
+				width: 100%
+				height: 100%
+				overflow-y: scroll
+				left: 0
+				top: 0
+	
+			&__title-container 
+				margin-bottom: 24px
+				display: flex
+				flex-direction: row
+				flex-wrap: nowrap
+				align-items: center
+
+				&__title 
+					font-size: 24px
+					flex-grow: 1
+
+				&__close-button 
+					flex-grow: 0
+					cursor: pointer
+
+			&__topsites 
+				width: 100%
+				display: flex
+				justify-content: space-around
+				flex-wrap: wrap
+
+				&__topsite 
+					text-decoration: none
+					color: gray
+					padding: 4px
+					margin: 12px
+					width: 200px
+					height: 24px
+					font-size: 14px
+					display: flex
+					flex-direction: row
+					flex-wrap: nowrap
+					align-items: center
+					position: relative
+
+					&::after 
+						content: ' '
+						position: absolute
+						right: 0
+						width: 18px
+						height: 100%
+						background: linear-gradient(to right, transparent 0, white)
+
+					&__favicon 
+						flex-grow: 0
+						min-width: 24px
+						height: 24px
+						margin-left: 4px
+						padding: calc((24px - 16px) / 2)
+						box-sizing: border-box
+
+					&__title 
+						white-space: nowrap
+						flex-grow: 0
+						overflow: hidden
+						margin-left: 8px
+
+.material-icons.md-18  
+	font-size: 18px 
+
+.material-icons.md-24  
+	font-size: 24px 
+
+.material-icons.md-36  
+	font-size: 36px 
+
+.material-icons.md-48  
+	font-size: 48px 
