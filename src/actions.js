@@ -3,14 +3,18 @@ import Mustache from 'mustache';
 
 export default {
     /**
-     * Return a load image action.
-     * @param {*} $ Depended elements.
+     * Image loading action factory.
+     * @param {Object} $ Depended elements.
+     * @return {Function} A image loading action.
      */
     getLoadImage: ($) => {
         let loading = false;
         let descriptionTemplate = null;
         const apiUrl = 'https://www.reddit.com/r/Moescape/random.json';
 
+        /**
+         * @return {async function} A Promise which load a new image.
+         */
         const newImageLoader = async () => {
             const data = await Utils.getJSON(apiUrl);
             const post = data[0].data.children[0];
@@ -23,14 +27,22 @@ export default {
             }
         };
 
+        /**
+         * @return {async function} A Promise which first check if it's a new day 
+         * then load a new image.
+         */
         const dailyImageLoader = async () => { 
             let lastData = null;
             
             try {
-                lastData = await browser.storage.local.get([
-                    'lastPostData', 
-                    'lastLoadedTime'
-                ]);
+                if (typeof browser !== 'undefined') {
+                    lastData = await browser.storage.local.get([
+                        'lastPostData', 
+                        'lastLoadedTime'
+                    ]);
+                } else {
+                    throw new Error(`'browser' is undefined. Perhap I'm not being run as an extension.`);
+                }
             } catch(error) {
                 console.log(`[Moescape Art] ${error}`);
                 console.log(`[Moescape Art] Trying to load new image.`);
@@ -51,6 +63,9 @@ export default {
             }
         }
 
+        /**
+         * @return {async function} A load image action.
+         */
         const loadImage = async (loader) => {
             if (loading) { 
                 return 1;
@@ -70,12 +85,16 @@ export default {
                 return 1;
             }
 
-            browser.storage.local.set({ 
-                lastPostData: postData,
-                lastLoadedTime: new Date()
-            }).then(null, (error) => 
-                console.log(`[Moescape Art] Can't save last post data. Error: ${error}`)
-            );
+            if (typeof browser !== 'undefined') {
+                browser.storage.local.set({ 
+                    lastPostData: postData,
+                    lastLoadedTime: new Date()
+                }).then(null, (error) => 
+                    console.log(`[Moescape Art] Can't save last post data. Error: ${error}`)
+                );
+            } else {
+                console.log(`'browser' is undefined. Perhap I'm not being run as an extension.`);
+            }
 
             $.$image().style.backgroundImage = 'url(' + postData.thumbnail + ')';
             $.$image().style.filter = 'blur(8px)';
@@ -113,15 +132,19 @@ export default {
             $.$reloadButton().addEventListener('click', () => loadImage(newImageLoader));
 
             $.$downloadButton().addEventListener('click', () => {
-                const downloading = browser.downloads.download({
-                    url : postData.url,
-                    filename : postData.title + '.' + Utils.getExtension(postData.url)
-                });
-                    
-                downloading.then(
-                    () => alert('Download started.'), 
-                    (error) => alert(`Download failed: ${error}`)
-                );
+                if (typeof browser !== 'undefined') {
+                    const downloading = browser.downloads.download({
+                        url : postData.url,
+                        filename : postData.title + '.' + Utils.getExtension(postData.url)
+                    });
+                        
+                    downloading.then(
+                        () => alert('Download started.'), 
+                        (error) => alert(`Download failed: ${error}`)
+                    );
+                } else {
+                    console.log(`'browser' is undefined. Perhap I'm not being run as an extension.`);
+                }
             });
 
             loading = false;
@@ -142,38 +165,47 @@ export default {
     },
 
     /**
-     * Return a load top sites action.
-     * @param {*} $ Depended elements.
+     * Top sites loading action factory.
+     * @param {Object} $ Depended elements.
+     * @return {Function} A top sites loading action.
      */
     getLoadTopSites: ($) => {
         let template = null;
 
         return () => {
             $.$topSites().style.visibility = 'hidden';
-    
-            browser.topSites.get().then((topSites) => {
-                if (!template) {
-                    template = $.$topSites().innerHTML;
-                    Mustache.parse(template);
-                }
-    
-                $.$topSites().innerHTML = Mustache.render(template, { 
-                    topSites: topSites.slice(0, 12).map((e) => { 
-                        e.favicon = function() {
-                            return 'https://www.google.com/s2/favicons?domain=' 
-                                    + Utils.httpURLGetDomain(this.url);
-                        }.bind(e);
-                        return e;
-                    })
+
+            if (typeof browser !== 'undefined') {
+                browser.topSites.get().then((topSites) => {
+                    if (!template) {
+                        template = $.$topSites().innerHTML;
+                        Mustache.parse(template);
+                    }
+        
+                    $.$topSites().innerHTML = Mustache.render(template, { 
+                        topSites: topSites.slice(0, 12).map((e) => { 
+                            e.favicon = function() {
+                                return 'https://www.google.com/s2/favicons?domain=' 
+                                        + Utils.httpURLGetDomain(this.url);
+                            }.bind(e);
+                            return e;
+                        })
+                    });
+        
+                    $.$topSites().style.visibility = 'visible';
+                }, (err) => {
+                    console.log(`[Moescape Art] Can't get top sites. Error: ${err}`);
                 });
-    
-                $.$topSites().style.visibility = 'visible';
-            }, (err) => {
-                console.log(`[Moescape Art] Can't get top sites. Error: ${err}`);
-            });
+            } else {
+                console.log(`'browser' is undefined. Perhap I'm not being run as an extension.`);
+            }
         };
     },
 
+    /**
+     * Apply options.
+     * @param  {Object} $ Depended element.
+     */
     applyOptions: ($) => {
         const backgroundSize = $.options.backgroundSize;
 

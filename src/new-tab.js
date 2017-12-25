@@ -34,28 +34,36 @@ Utils.ready(async () => {
         })
     }));
 
-    browser.storage.onChanged.addListener((changes, areaName) => {
-        if (changes.backgroundChangingTimming || changes.backgroundSize) {
-            let options = {};
+    if (typeof browser !== 'undefined') {
+        browser.storage.onChanged.addListener((changes, areaName) => {
+            if (changes.backgroundChangingTimming || changes.backgroundSize) {
+                let options = {};
 
-            if (changes.backgroundChangingTimming) {
-                options.backgroundChangingTimming = changes.backgroundChangingTimming.newValue;
+                if (changes.backgroundChangingTimming) {
+                    options.backgroundChangingTimming = changes.backgroundChangingTimming.newValue;
+                }
+
+                if (changes.backgroundSize) {
+                    options.backgroundSize = changes.backgroundSize.newValue;
+                }
+
+                Actions.applyOptions({ options, $image });
             }
-
-            if (changes.backgroundSize) {
-                options.backgroundSize = changes.backgroundSize.newValue;
-            }
-
-            Actions.applyOptions({ options, $image });
-        }
-    });
+        });
+    } else {
+        console.log(`'browser' is undefined. Perhap I'm not being run as an extension.`);
+    }
 
     let options = {};
 
-    Object.assign(options, await browser.storage.local.get([
-        'backgroundChangingTimming', 
-        'backgroundSize'
-    ]));
+    if (typeof browser !== 'undefined') {
+        Object.assign(options, await browser.storage.local.get([
+            'backgroundChangingTimming', 
+            'backgroundSize'
+        ]));
+    } else {
+        console.log(`'browser' is undefined. Perhap I'm not being run as an extension.`);
+    }
 
     Actions.applyOptions({ options, $image });
 

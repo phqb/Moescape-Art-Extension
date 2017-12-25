@@ -1,7 +1,15 @@
 {
+    "applications": {
+      "gecko": {
+        "id": "{dc59b99f-5e6a-42fe-937c-144455e40046}",
+        "strict_min_version": "57.0"
+      }
+    },
+    "author": "phqb",
+    "homepage_url": "https://github.com/lucyxyuno/Moescape-Art-Extension",
     "manifest_version": 2,
     "name": "Moescape Art",
-    "version": "1.0",
+    "version": "1.2",
     "description": "Replace your new tab with a randomized image from r/Moescape",
     "icons" : {
         "48": "moe-48.png"

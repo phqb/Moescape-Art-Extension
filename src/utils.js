@@ -1,7 +1,7 @@
 export default {
     /**
      * Credit: http://youmightnotneedjquery.com/#ready
-     * @param {*} fn An page-ready event handler.
+     * @param {function} fn An page-ready event handler.
      */
     ready: (fn) => {
         if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
@@ -11,6 +11,11 @@ export default {
         }
     },
 
+    /**
+     * Get a Promise which load JSON from an URL.
+     * @param  {String} url The URL to be loaded.
+     * @return {Promise} A Promise.
+     */
     getJSON: (url) => new Promise((resolve, reject) => {
         const request = new XMLHttpRequest();
         request.open('GET', url, true);
@@ -30,6 +35,11 @@ export default {
         request.send();
     }),
 
+    /**
+     * Get a Promise which load image from an URL.
+     * @param  {String} url The URL.
+     * @return {Promise} A Promise.
+     */
     getImage: (url) => new Promise((resolve, reject) => {
         const imageLoader = new Image();
         
@@ -46,7 +56,7 @@ export default {
 
     /**
      * Prefix an unprefixed http URL.
-     * @param {*} url The URL to be prefixed.
+     * @param {String} url The URL to be prefixed.
      */
     httpURLPrefixProber: (url) => {
         if (url.startsWith('https://') || url.startsWith('http://')) {
@@ -58,13 +68,13 @@ export default {
 
     /**
      * Get the domain of the URL.
-     * @param {*} url The URL.
+     * @param {String} url The URL.
      */
     httpURLGetDomain: (url) => url.replace(/.*?(\w+(?:\.\w+)+).*/, '$1'),
 
     /**
      * Get the extension of the file URL.
-     * @param {*} url The file URL.
+     * @param {String} url The file URL.
      */
     getExtension: (url) => url.replace(/^.*\.(\w+)$/, '$1')
 }

@@ -7,6 +7,7 @@
     "build": "cross-env BUILD=production gulp build",
     "build-dev": "cross-env BUILD=development gulp build",
     "clean": "gulp clean",
+    "package": "gulp package",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -19,6 +20,7 @@
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-csso": "^3.0.0",
+    "gulp-run": "^1.7.1",
     "gulp-sass": "^3.1.0",
     "rollup": "^0.53.0",
     "rollup-plugin-commonjs": "^8.2.6",

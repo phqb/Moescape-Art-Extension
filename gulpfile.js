@@ -8,6 +8,7 @@ const minifyJS = require('uglify-es').minify;
 const resolve = require('rollup-plugin-node-resolve');
 const sass = require('gulp-sass');
 const del = require('del');
+const run = require('gulp-run');
 
 var plugins = [];
 
@@ -71,3 +72,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('build', ['bundle-js', 'sass', 'copy']);
+
+gulp.task('package', [ 'build' ], function() {
+	return run('web-ext build -s dist -a dist --overwrite-dest').exec();
+});

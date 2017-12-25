@@ -1,7 +1,7 @@
 export default {
     /**
      * Get an on-hover event listener of given 'container__description_container' element.
-     * @param {*} $ Depended elements.
+     * @param {object} $ Depended elements.
      */
     container__description_container__getHoverEventHandler: ($) => {
         let onMouseOut = null;
@@ -21,6 +21,11 @@ export default {
         };
     },
 
+    /**
+     * Get an on-click event listener of given 
+     * 'container__topsitesContainer__titleContainer__closeButton__getClickEventHandler' element.
+     * @param {object} $ Depended elements.
+     */
     container__topsitesContainer__titleContainer__closeButton__getClickEventHandler: ($) => {
         return (e) => {
             $.$topSitesWrapper().style.visibility = 'hidden';
@@ -28,6 +33,10 @@ export default {
         };
     },
 
+    /**
+     * Get an on-click event listener of given 'container__tabsButton' element.
+     * @param {object} $ Depended elements.
+     */
     container__tabsButton__getClickEventHandler: ($) => {
         return (e) => {
             $.$topSitesWrapper().style.opacity = 0;
