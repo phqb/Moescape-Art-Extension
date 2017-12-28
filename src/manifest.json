@@ -9,7 +9,7 @@
     "homepage_url": "https://github.com/lucyxyuno/Moescape-Art-Extension",
     "manifest_version": 2,
     "name": "Moescape Art",
-    "version": "1.2",
+    "version": "1.4",
     "description": "Replace your new tab with a randomized image from r/Moescape",
     "icons" : {
         "48": "moe-48.png"

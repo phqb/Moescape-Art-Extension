@@ -49,10 +49,9 @@ export default {
                 return await newImageLoader();
             }
 
-            if (lastData.lastPostData) {
-                if (!lastData.lastLoadedTime 
-                    || new Date().getDate() == lastData.lastLoadedTime.getDate()) 
-                {
+            if (lastData.lastPostData && lastData.lastLoadedTime) {
+                let date = new Date(lastData.lastLoadedTime);
+                if (new Date().getDate() == date.getDate()) {
                     return lastData.lastPostData;
                 } else {
                     return await newImageLoader();    
@@ -88,7 +87,7 @@ export default {
             if (typeof browser !== 'undefined') {
                 browser.storage.local.set({ 
                     lastPostData: postData,
-                    lastLoadedTime: new Date()
+                    lastLoadedTime: Date.now()
                 }).then(null, (error) => 
                     console.log(`[Moescape Art] Can't save last post data. Error: ${error}`)
                 );
